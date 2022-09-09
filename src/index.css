@@ -1,0 +1,118 @@
+@font-face {
+  font-family: "Noto Sans";
+  font-style: normal;
+  font-weight: 400;
+  src: local(""), url("./assets/fonts/noto-sans-400.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Noto Sans";
+  font-style: normal;
+  font-weight: 500;
+  src: local(""), url("./assets/fonts/noto-sans-500.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Noto Sans";
+  font-style: normal;
+  font-weight: 600;
+  src: local(""), url("./assets/fonts/noto-sans-600.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Noto Sans";
+  font-style: normal;
+  font-weight: 700;
+  src: local(""), url("./assets/fonts/noto-sans-700.woff2") format("woff2");
+}
+
+*,
+*::before,
+*::after {
+  outline: transparent;
+  font-family: 'Noto Sans', sans-serif;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Noto Sans', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--dark-blue);
+  background: url('./assets/left-bg.png'), url('./assets/right-bg.png'), var(--ultra-light-purple);
+  background-repeat: repeat-y, repeat-y;
+  background-position: top left, top right;
+  background-size: 660px auto, 963px auto, auto auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+:root {
+  /* sizes */
+  --container-max: 1270px;
+  --container-form-padding: 50px;
+
+  /* colors */
+  --black: #000;
+  --white: #fff;
+  --main-color: #27273F;
+  --dark-blue: #1F334F;
+  --dark-blue-06: rgba(31, 51, 79, .6);
+  --light-purple: #7D79FF;
+  --btn-primary: #605DCA;
+  --ultra-light-purple: #F1F5FF;
+  --purple-transparent-01: rgba(96, 93, 202, .1);
+  --purple-transparent-02: rgba(96, 93, 202, .2);
+}
+
+
+html {
+  box-sizing: border-box;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+  margin: 0;
+  padding: 0;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  border: none;
+  background-color: transparent;
+}
+
+input, textarea {
+  resize: none;
+  border: none;
+  outline: none;
+  padding: 0;
+  margin: 0;
+  font-family: sans-serif;
+  background-color: var(--ultra-light-purple);
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.btnPrimary {
+  color: var(--white);
+  border-radius: 35px;
+  background-color: var(--btn-primary);
+}

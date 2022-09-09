@@ -1,0 +1,49 @@
+.container {
+    background-color: var(--main-color);
+}
+
+.wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 18px;
+    padding-bottom: 18px;
+    padding-left: var(--container-form-padding);
+    padding-right: var(--container-form-padding);
+    margin: 0 auto;
+    max-width: var(--container-max);
+}
+
+.wrapper>a {
+    margin: 0;
+    line-height: 0;
+}
+
+.wrapper>svg {
+    cursor: pointer;
+}
+
+.nav {
+    display: flex;
+    gap: 24px;
+}
+
+.nav>a {
+    cursor: pointer;
+    color: var(--white);
+    transition: color .3s ease;
+}
+
+.nav>a:hover {
+    color: var(--light-purple);
+}
+
+.nav .navTel {
+    color: var(--light-purple);
+    border-bottom: 1px dashed var(--light-purple);
+    transition: opacity .3s ease;
+}
+
+.navTel:hover {
+    opacity: .7;
+}

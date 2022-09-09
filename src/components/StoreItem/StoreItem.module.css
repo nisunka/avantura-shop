@@ -1,0 +1,72 @@
+.card {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    height: 100%;
+    border-radius: 15px;
+    background-color: var(--white);
+    box-shadow: 0px 16px 24px rgba(96, 93, 202, 0.16);
+    transition: transform .3s ease;
+    cursor: pointer;
+}
+
+.card:hover {
+    transform: translateY(-1%);
+}
+
+.bottomBlock {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+}
+
+.title {
+    margin-bottom: 8px;
+}
+
+.age,
+.direction {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+}
+
+.direction {
+    margin-bottom: 19px;
+}
+
+.directionInfo {
+    margin-top: auto;
+}
+
+.img {
+    max-width: 230px;
+}
+
+.description {
+    display: inline-block;
+    margin-bottom: 12px;
+}
+
+.description,
+.direction,
+.age {
+    color: var(--dark-blue-06);
+}
+
+.btn {
+    padding: 6px 16px;
+    font-size: 13px;
+    transition: opacity .3s ease;
+}
+
+.btn:hover {
+    opacity: .9;
+}
+
+.price {
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--btn-primary);
+}

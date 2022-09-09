@@ -1,0 +1,27 @@
+.container {
+    padding-top: 18px;
+    padding-bottom: 18px;
+    padding-left: var(--container-form-padding);
+    padding-right: var(--container-form-padding);
+    margin: 0 auto;
+    max-width: var(--container-max);
+}
+
+.itemBody {
+    padding: 15px 0 52px 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+    gap: 30px;
+}
+
+.topSettings {
+    padding: 52px 0 22px 0;
+}
+
+.bottomSettings {
+    padding: 22px 0 15px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

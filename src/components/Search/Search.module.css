@@ -1,0 +1,21 @@
+.wrapper {
+    width: calc(505 / 1170 * 100%);
+    display: flex;
+    align-items: center;
+    border-radius: 70px;
+    padding: 0 20px;
+    justify-content: flex-start;
+    background-color: var(--ultra-light-purple);
+    border: 2px solid var(--purple-transparent-02);
+    transition: border-color .3s ease;
+}
+
+.input {
+    width: 90%;
+    padding: 10px 20px;
+}
+
+.wrapper:hover,
+.input:focus-within {
+    border-color: var(--btn-primary);
+}
