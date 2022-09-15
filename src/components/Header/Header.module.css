@@ -47,3 +47,50 @@
 .navTel:hover {
     opacity: .7;
 }
+
+.cartLink {
+    display: flex;
+    gap: 5px;
+    align-items: stretch;
+}
+
+
+.priceItems {
+    min-width: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 500;
+    border-radius: 15px;
+    padding: 10px 15px;
+    color: var(--white);
+    background-color: var(--btn-primary);
+}
+
+.cartLogo {
+    position: relative;
+}
+
+.cartLogo>*:last-child {
+    position: absolute;
+    right: -17%;
+    top: -10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.countItems {
+    min-width: 16px;
+    min-height: 16px;
+    border-radius: 50%;
+    background-color: var(--peach);
+}
+
+.cartLogo>*:last-child>span {
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 0;
+    color: var(--white);
+}

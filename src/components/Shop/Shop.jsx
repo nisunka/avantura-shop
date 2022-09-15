@@ -1,43 +1,92 @@
 import React from 'react';
+import axios from 'axios';
+import qs from 'qs';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { setCategoryId, setFilters } from '../../redux/slices/filterSlice';
 import Categories from '../Categories/Categories';
 import Search from '../Search/Search';
-import Sort from '../Sort/Sort';
+import Sort, { sortItem } from '../Sort/Sort';
 import StoreItem from '../StoreItem/StoreItem';
 import Skeleton from '../Skeleton/Skeleton';
 import { SearchContext } from '../../App';
 import style from './Shop.module.css';
 
 const Shop = () => {
+  const navigate = useNavigate();
+  const isSearch = React.useRef(false); // чтобы 2 раза не рендерился сайт при загрузке. Проверка на поисковую строку
+  const isMounted = React.useRef(false); // первый рендер
+  // redux
+  const dispatch = useDispatch();
+  const { categoryId, sort } = useSelector((state) => state.filter);
+  const sortType = sort.sortProperty;
+
+  // context (временно)
   const { searchValue } = React.useContext(SearchContext);
 
   const [items, setItems] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
-  const [categoryId, setCategoryId] = React.useState(0);
-  const [sortType, setSortType] = React.useState({
-    name: 'Сначала популярные',
-    sortProperty: 'rating',
-  });
 
-  // filterSettings
-  const category = categoryId > 0 ? `&category=${categoryId}` : '';
-  const sortBy = sortType.sortProperty.replace('-', '');
-  const order = sortType.sortProperty.includes('-') ? 'asc' : 'desc';
-  // search
-  const search = searchValue ? `&search=${searchValue}` : '';
+  const onChangeCategory = React.useCallback((index) => {
+    dispatch(setCategoryId(index));
+  }, []);
 
-  React.useEffect(() => {
+  const fetchItems = () => {
     setIsLoading(true);
-    fetch(
-      `https://631717b482797be77ff302e4.mockapi.io/items?${category}&sortBy=${sortBy}&order=${order}${search}`,
-    )
+    // filterSettings
+    const category = categoryId > 0 ? `&category=${categoryId}` : '';
+    const sortBy = sortType.replace('-', '');
+    const order = sortType.includes('-') ? 'asc' : 'desc';
+    // search
+    const search = searchValue ? `&search=${searchValue}` : '';
+
+    axios
+      .get(
+        `https://631717b482797be77ff302e4.mockapi.io/items?${category}&sortBy=${sortBy}&order=${order}${search}`,
+      )
       .then((response) => {
-        return response.json();
-      })
-      .then((json) => {
-        setItems(json);
+        setItems(response.data);
         setIsLoading(false);
       });
-    window.scrollTo(0, 0);
+  };
+
+  // useEffect, который отвечает за парсинг параметров которые у нас есть, связанные с фильтрацией наших пицц и вшивание их в адресную строчку
+  // если изменили параметры и был первый рендер
+  React.useEffect(() => {
+    // если был первый рендер, тогда выполняй
+    if (isMounted.current) {
+      const queryString = qs.stringify({
+        sortProperty: sortType,
+        categoryId,
+        searchValue,
+      });
+      navigate(`?${queryString}`);
+    }
+    isMounted.current = true;
+  }, [categoryId, sortType, searchValue]);
+
+  // Проверяем, url параметры (если был первый рендер) и сохраняем в redux
+  // substring(1) - убираем вопросительный знак
+  React.useEffect(() => {
+    if (window.location.search) {
+      const params = qs.parse(window.location.search.substring(1));
+      const sort = sortItem.find((obj) => obj.sortProperty === params.sortProperty);
+      dispatch(
+        setFilters({
+          ...params,
+          sort,
+        }),
+      );
+      isSearch.current = true; // филтры изменились, значит нужно ререндить
+    }
+  }, []);
+
+  // если был первый рендер, запрашиваем товары
+  React.useEffect(() => {
+    if (!isSearch.current) {
+      fetchItems();
+    }
+    isSearch.current = false;
   }, [categoryId, sortType, searchValue]);
 
   const renderSkeletons = [...new Array(16)].map((_, index) => <Skeleton key={index} />);
@@ -59,12 +108,12 @@ const Shop = () => {
     <div className={style.container}>
       <div className={style.filterSettings}>
         <div className={style.topSettings}>
-          <Categories value={categoryId} onChangeCategory={(index) => setCategoryId(index)} />
+          <Categories value={categoryId} onChangeCategory={onChangeCategory} />
         </div>
         <div className={style.bottomSettings}>
           <Search />
           <div className={style.settingsRightSide}>
-            <Sort value={sortType} onChangeSort={(item) => setSortType(item)} />
+            <Sort />
             <div className={style.settingsSortAge}>{/* sortAge */}</div>
           </div>
         </div>

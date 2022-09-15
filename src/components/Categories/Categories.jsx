@@ -1,7 +1,7 @@
 import React from 'react';
 import style from './Categories.module.css';
 
-const categoriesList = ['Все товары', 'Квестики', 'Игры', 'Разное', 'Тетради', 'Отзывы'];
+const categoriesList = ['Все товары', 'Квестики', 'Игры', 'Разное', 'Тетради'];
 
 const Categories = ({ value, onChangeCategory }) => {
   return (

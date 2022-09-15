@@ -1,4 +1,4 @@
-# Интернет-магазин настольных игр от компании "Авантюра"
+# Интернет-магазин детских настольных игр от компании "Авантюра"
 
 (тут будет описание)
 
@@ -16,7 +16,12 @@ npm start
 
 📎 [ReactJs](https://reactjs.org/)  
 📎 [TypeScript](https://www.typescriptlang.org/)  
-📎 В разработке
+📎 [Redux Toolkit](https://redux-toolkit.js.org/)
+📎 [Mockapi](https://mockapi.io/)
+📎 [qs](https://www.npmjs.com/package/qs)
+📎 [axios](https://axios-http.com/docs/intro)
+📎 [lodash.debounce](https://www.npmjs.com/package/lodash.debounce)
+📎 В разработке...
 
 ### Специфика
 

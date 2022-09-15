@@ -13,6 +13,9 @@
 .input {
     width: 90%;
     padding: 10px 20px;
+    font-size: 14px;
+    line-height: 19px;
+    color: var(--dark-blue);
 }
 
 .wrapper:hover,

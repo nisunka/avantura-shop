@@ -1,13 +1,22 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { addItem } from '../../redux/slices/cartSlice';
 import { ReactComponent as BirthdayIcon } from '../../assets/icon/birthday.svg';
 import { ReactComponent as GraduateIcon } from '../../assets/icon/graduate.svg';
 import style from './StoreItem.module.css';
 
-const StoreItem = ({ age, descr, direction, imgUrl, name, price }) => {
-  const [count, setCount] = React.useState(1);
+const StoreItem = ({ id, age, descr, direction, imgUrl, name, price }) => {
+  const dispatch = useDispatch();
 
   const onClickAdd = () => {
-    setCount(count + 1);
+    const item = {
+      id,
+      name,
+      price,
+      imgUrl,
+      descr,
+    };
+    dispatch(addItem(item));
   };
 
   return (

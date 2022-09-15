@@ -1,0 +1,34 @@
+.wrapper {
+    padding-left: var(--container-form-padding);
+    padding-right: var(--container-form-padding);
+    margin: 0 auto;
+    padding-top: 64px;
+    padding-bottom: 127px;
+    max-width: var(--container-max);
+}
+
+.link {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 20px;
+    color: var(--btn-primary);
+}
+
+.body {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.title {
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 49px;
+}
+
+.descr {
+    font-size: 16px;
+    line-height: 19px;
+}
