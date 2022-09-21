@@ -16,6 +16,7 @@ const Shop = () => {
   const navigate = useNavigate();
   const isSearch = React.useRef(false); // чтобы 2 раза не рендерился сайт при загрузке. Проверка на поисковую строку
   const isMounted = React.useRef(false); // первый рендер
+
   // redux
   const dispatch = useDispatch();
   const { categoryId, sort } = useSelector((state) => state.filter);
@@ -31,7 +32,8 @@ const Shop = () => {
     dispatch(setCategoryId(index));
   }, []);
 
-  const fetchItems = () => {
+  // получаем товары и сохраняем в адресную строку при помощи qs ниже
+  const fetchItems = async () => {
     setIsLoading(true);
     // filterSettings
     const category = categoryId > 0 ? `&category=${categoryId}` : '';
@@ -40,14 +42,16 @@ const Shop = () => {
     // search
     const search = searchValue ? `&search=${searchValue}` : '';
 
-    axios
-      .get(
-        `https://631717b482797be77ff302e4.mockapi.io/items?${category}&sortBy=${sortBy}&order=${order}${search}`,
-      )
-      .then((response) => {
-        setItems(response.data);
-        setIsLoading(false);
-      });
+    // код отправки запроса на сервер превращаем в синхронный, но тогда для отлова ошибок надо использовать try catch:
+    try {
+      const response = await axios.get(`https://631717b482797be77ff302e4.mockapi.io/items?${category}&sortBy=${sortBy}&order=${order}${search}`)
+      setItems(response.data);
+    } catch (error) {
+      // вернет первую ошибку, которая произошла в коде
+      console.log('Ошибка при получении товаров с сервера :(')
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   // useEffect, который отвечает за парсинг параметров которые у нас есть, связанные с фильтрацией наших пицц и вшивание их в адресную строчку
