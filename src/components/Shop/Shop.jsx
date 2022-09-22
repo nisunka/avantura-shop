@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import qs from 'qs';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,6 +10,7 @@ import StoreItem from '../StoreItem/StoreItem';
 import Skeleton from '../Skeleton/Skeleton';
 import { SearchContext } from '../../App';
 import style from './Shop.module.css';
+import { setItems, fetchGoods } from "../../redux/slices/goodsSlice";
 
 const Shop = () => {
   const navigate = useNavigate();
@@ -19,22 +19,23 @@ const Shop = () => {
 
   // redux
   const dispatch = useDispatch();
+  const { items, status } = useSelector((state) => state.goods);
   const { categoryId, sort } = useSelector((state) => state.filter);
   const sortType = sort.sortProperty;
 
   // context (временно)
   const { searchValue } = React.useContext(SearchContext);
 
-  const [items, setItems] = React.useState([]);
-  const [isLoading, setIsLoading] = React.useState(true);
+  // const [items, setItems] = React.useState([]);
+  // const [isLoading, setIsLoading] = React.useState(true);
 
-  const onChangeCategory = React.useCallback((index) => {
+  const onChangeCategory = (index) => {
     dispatch(setCategoryId(index));
-  }, []);
+  };
 
   // получаем товары и сохраняем в адресную строку при помощи qs ниже
-  const fetchItems = async () => {
-    setIsLoading(true);
+  const getItems = async () => {
+    // setIsLoading(true);
     // filterSettings
     const category = categoryId > 0 ? `&category=${categoryId}` : '';
     const sortBy = sortType.replace('-', '');
@@ -42,16 +43,7 @@ const Shop = () => {
     // search
     const search = searchValue ? `&search=${searchValue}` : '';
 
-    // код отправки запроса на сервер превращаем в синхронный, но тогда для отлова ошибок надо использовать try catch:
-    try {
-      const response = await axios.get(`https://631717b482797be77ff302e4.mockapi.io/items?${category}&sortBy=${sortBy}&order=${order}${search}`)
-      setItems(response.data);
-    } catch (error) {
-      // вернет первую ошибку, которая произошла в коде
-      console.log('Ошибка при получении товаров с сервера :(')
-    } finally {
-      setIsLoading(false);
-    }
+    dispatch(fetchGoods({category, sortBy, order, search }))
   };
 
   // useEffect, который отвечает за парсинг параметров которые у нас есть, связанные с фильтрацией наших пицц и вшивание их в адресную строчку
@@ -88,7 +80,7 @@ const Shop = () => {
   // если был первый рендер, запрашиваем товары
   React.useEffect(() => {
     if (!isSearch.current) {
-      fetchItems();
+      getItems();
     }
     isSearch.current = false;
   }, [categoryId, sortType, searchValue]);
@@ -122,7 +114,14 @@ const Shop = () => {
           </div>
         </div>
       </div>
-      <div className={style.itemBody}>{isLoading ? renderSkeletons : renderItems}</div>
+      { status === 'error' ?
+          <div className={style.error}>
+              <h2>Ой, что-то пошло не так</h2>
+              <span>Не удалось получить игры с сервера :( Разбираемся</span>
+          </div>
+          :
+          <div className={style.itemBody}>{status === 'loading' ? renderSkeletons : renderItems}</div>
+      }
     </div>
   );
 };
