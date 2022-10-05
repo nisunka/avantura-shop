@@ -1,5 +1,6 @@
 .container {
     background-color: var(--main-color);
+    width: 100%;
 }
 
 .wrapper {
@@ -93,4 +94,8 @@
     font-size: 11px;
     line-height: 0;
     color: var(--white);
+}
+
+.emptySpase {
+    width: 10%;
 }

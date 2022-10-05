@@ -6,7 +6,16 @@ import { ReactComponent as MinusIcon } from '../../assets/icon/minus.svg';
 import { ReactComponent as DeleteIcon } from '../../assets/icon/delete.svg';
 import style from './CartItem.module.css';
 
-const CartItem = ({ id, name, price, count, imgUrl, descr }) => {
+type TCartItem = {
+  id: string;
+  name: string;
+  price: number;
+  count: number;
+  imgUrl: string;
+  descr: number;
+};
+
+const CartItem: React.FC<TCartItem> = ({ id, name, price, count, imgUrl, descr }) => {
   const dispatch = useDispatch();
   const onClickPlus = () => {
     dispatch(

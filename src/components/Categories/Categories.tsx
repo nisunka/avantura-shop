@@ -1,9 +1,14 @@
 import React from 'react';
 import style from './Categories.module.css';
 
+type TCategoriesProps = {
+  value: number;
+  onChangeCategory: (index: number) => void; // функция не требует возвращения при помощи return
+};
+
 const categoriesList = ['Все товары', 'Квестики', 'Игры', 'Разное', 'Тетради'];
 
-const Categories = ({ value, onChangeCategory }) => {
+const Categories: React.FC<TCategoriesProps> = ({ value, onChangeCategory }) => {
   return (
     <div className={style.list}>
       {categoriesList.map((categoryName, index) => (

@@ -1,6 +1,6 @@
 import ContentLoader from 'react-content-loader';
 
-const Skeleton = () => (
+const Skeleton: React.FC = () => (
   <ContentLoader
     speed={2}
     width={272}

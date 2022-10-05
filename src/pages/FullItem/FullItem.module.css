@@ -1,0 +1,80 @@
+.container {
+    padding: 64px var(--container-form-padding);
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    margin: 0 auto;
+    max-width: var(--container-max);
+}
+
+.leftSide {
+    width: 40%;
+}
+
+.rightSide {
+    width: 60%;
+}
+
+.link {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 20px;
+    color: var(--btn-primary);
+}
+
+.title {
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 49px;
+    margin-bottom: 7px;
+}
+
+.age,
+.direction {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+}
+
+.info {
+    display: flex;
+    gap: 40px;
+    margin-bottom: 24px;
+}
+
+.svg {
+    width: 32px;
+    height: 32px;
+}
+
+.bottom {
+    display: flex;
+    flex-direction: column;
+}
+
+.price {
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 49px;
+    margin-bottom: 33px;
+    color: var(--btn-primary);
+}
+
+.btn {
+    max-width: 222px;
+    padding: 14px 32px;
+    font-size: 16px;
+    transition: opacity .3s ease;
+}
+
+.btn:hover {
+    opacity: .9;
+}
+
+.img {
+    border-radius: 15px;
+}
+
+.detail {
+    margin-bottom: 14px;
+}

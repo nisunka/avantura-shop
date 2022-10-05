@@ -1,4 +1,3 @@
-import React from 'react';
 import { ReactComponent as BenefitsIcon } from '../../assets/aboutImg/benefits.svg';
 import { ReactComponent as GameIcon } from '../../assets/aboutImg/game.svg';
 import { ReactComponent as TrophyIcon } from '../../assets/aboutImg/trophy.svg';
@@ -28,7 +27,7 @@ const listInfo = [
   },
 ];
 
-const About = () => {
+const About: React.FC = () => {
   return (
     <div className={style.container}>
       <span className={style.head}>

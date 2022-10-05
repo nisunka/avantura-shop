@@ -1,10 +1,9 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import style from './EmptyCart.module.css';
 
-const EmptyCart = () => {
+const EmptyCart: React.FC = () => {
   return (
-    <div class={style.wrapper}>
+    <div className={style.wrapper}>
       <div className={style.body}>
         <span className={style.title}>Ой, а корзина пустая...</span>
         <span className={style.descr}>

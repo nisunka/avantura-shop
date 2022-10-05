@@ -1,11 +1,22 @@
 import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { addItem } from '../../redux/slices/cartSlice';
 import { ReactComponent as BirthdayIcon } from '../../assets/icon/birthday.svg';
 import { ReactComponent as GraduateIcon } from '../../assets/icon/graduate.svg';
 import style from './StoreItem.module.css';
 
-const StoreItem = ({ id, age, descr, direction, imgUrl, name, price }) => {
+type TStoreItem = {
+  id: string;
+  age: number;
+  descr: string;
+  direction: string;
+  imgUrl: string;
+  name: string;
+  price: number;
+};
+
+const StoreItem: React.FC<TStoreItem> = ({ id, age, descr, direction, imgUrl, name, price }) => {
   const dispatch = useDispatch();
 
   const onClickAdd = () => {
@@ -21,11 +32,13 @@ const StoreItem = ({ id, age, descr, direction, imgUrl, name, price }) => {
 
   return (
     <div className={style.card}>
-      <img src={imgUrl} alt="product" className={style.img} />
-      <div className={style.body}>
-        <h3 className={style.title}>{name}</h3>
-        <span className={style.description}>{descr}</span>
-      </div>
+      <Link to={`/items/${id}`} key={id}>
+        <img src={imgUrl} alt="product" className={style.img} />
+        <div className={style.body}>
+          <h3 className={style.title}>{name}</h3>
+          <span className={style.description}>{descr}</span>
+        </div>
+      </Link>
       <div className={style.directionInfo}>
         <div className={style.age}>
           <BirthdayIcon />

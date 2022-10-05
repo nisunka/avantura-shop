@@ -41,6 +41,8 @@ export const cartSlice = createSlice({
   },
 });
 
+// export const selectCart = (state) = state.cart // можно сделать селекторы, чтобы не каждый раз писать ()=> ф-ю в компонентах
+
 export const { addItem, removeItem, clearItems, minusItem } = cartSlice.actions;
 
 export default cartSlice.reducer;

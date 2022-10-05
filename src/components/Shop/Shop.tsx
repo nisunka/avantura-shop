@@ -8,28 +8,21 @@ import Search from '../Search/Search';
 import Sort, { sortItem } from '../Sort/Sort';
 import StoreItem from '../StoreItem/StoreItem';
 import Skeleton from '../Skeleton/Skeleton';
-import { SearchContext } from '../../App';
 import style from './Shop.module.css';
-import { setItems, fetchGoods } from "../../redux/slices/goodsSlice";
+import { setItems, fetchGoods } from '../../redux/slices/goodsSlice';
 
-const Shop = () => {
+const Shop: React.FC = () => {
   const navigate = useNavigate();
   const isSearch = React.useRef(false); // чтобы 2 раза не рендерился сайт при загрузке. Проверка на поисковую строку
   const isMounted = React.useRef(false); // первый рендер
 
   // redux
   const dispatch = useDispatch();
-  const { items, status } = useSelector((state) => state.goods);
-  const { categoryId, sort } = useSelector((state) => state.filter);
+  const { items, status } = useSelector((state: any) => state.goods);
+  const { categoryId, sort, searchValue } = useSelector((state: any) => state.filter);
   const sortType = sort.sortProperty;
 
-  // context (временно)
-  const { searchValue } = React.useContext(SearchContext);
-
-  // const [items, setItems] = React.useState([]);
-  // const [isLoading, setIsLoading] = React.useState(true);
-
-  const onChangeCategory = (index) => {
+  const onChangeCategory = (index: number) => {
     dispatch(setCategoryId(index));
   };
 
@@ -43,7 +36,10 @@ const Shop = () => {
     // search
     const search = searchValue ? `&search=${searchValue}` : '';
 
-    dispatch(fetchGoods({category, sortBy, order, search }))
+    dispatch(
+      // @ts-ignore
+      fetchGoods({ category, sortBy, order, search }),
+    );
   };
 
   // useEffect, который отвечает за парсинг параметров которые у нас есть, связанные с фильтрацией наших пицц и вшивание их в адресную строчку
@@ -87,18 +83,14 @@ const Shop = () => {
 
   const renderSkeletons = [...new Array(16)].map((_, index) => <Skeleton key={index} />);
   const renderItems = items
-    .filter((item) => {
+    .filter((item: any) => {
       if (item.name.toLowerCase().includes(searchValue.toLowerCase())) {
         return true;
       } else {
         return false;
       }
     })
-    .map((item) => (
-      <div key={item.id}>
-        <StoreItem {...item} />
-      </div>
-    ));
+    .map((item: any) => <StoreItem {...item} key={item.id} />);
 
   return (
     <div className={style.container}>
@@ -114,14 +106,14 @@ const Shop = () => {
           </div>
         </div>
       </div>
-      { status === 'error' ?
-          <div className={style.error}>
-              <h2>Ой, что-то пошло не так</h2>
-              <span>Не удалось получить игры с сервера :( Разбираемся</span>
-          </div>
-          :
-          <div className={style.itemBody}>{status === 'loading' ? renderSkeletons : renderItems}</div>
-      }
+      {status === 'error' ? (
+        <div className={style.error}>
+          <h2>Ой, что-то пошло не так</h2>
+          <span>Не удалось получить игры с сервера :( Разбираемся</span>
+        </div>
+      ) : (
+        <div className={style.itemBody}>{status === 'loading' ? renderSkeletons : renderItems}</div>
+      )}
     </div>
   );
 };
