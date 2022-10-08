@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { addItem } from '../../redux/slices/cartSlice';
+import { addItem, TCartItem } from '../../redux/slices/cartSlice';
 import { ReactComponent as BirthdayIcon } from '../../assets/icon/birthday.svg';
 import { ReactComponent as GraduateIcon } from '../../assets/icon/graduate.svg';
 import style from './StoreItem.module.css';
@@ -14,18 +14,37 @@ type TStoreItem = {
   imgUrl: string;
   name: string;
   price: number;
+  detail: string;
+  category: string;
+  count: number;
 };
 
-const StoreItem: React.FC<TStoreItem> = ({ id, age, descr, direction, imgUrl, name, price }) => {
+const StoreItem: React.FC<TStoreItem> = ({
+  id,
+  age,
+  descr,
+  direction,
+  imgUrl,
+  name,
+  price,
+  detail,
+  category,
+  count,
+}) => {
   const dispatch = useDispatch();
 
   const onClickAdd = () => {
-    const item = {
+    const item: TCartItem = {
       id,
       name,
       price,
       imgUrl,
       descr,
+      age,
+      detail,
+      category,
+      direction,
+      count,
     };
     dispatch(addItem(item));
   };

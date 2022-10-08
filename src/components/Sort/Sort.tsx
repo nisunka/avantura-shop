@@ -1,11 +1,12 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setSort } from '../../redux/slices/filterSlice';
+import { ESortProperty, setSort } from '../../redux/slices/filterSlice';
+import { useAppDispatch } from '../../redux/store';
 import style from './Sort.module.css';
 
 type TSortItem = {
   name: string;
-  sortProperty: string;
+  sortProperty: ESortProperty;
 };
 
 type PopupClick = MouseEvent & {
@@ -13,14 +14,14 @@ type PopupClick = MouseEvent & {
 };
 
 export const sortItem: TSortItem[] = [
-  { name: 'Сначала популярные', sortProperty: 'rating' },
-  { name: 'Цена по убыванию', sortProperty: 'price' },
-  { name: 'Цена по возрастанию', sortProperty: '-price' },
+  { name: 'Сначала популярные', sortProperty: ESortProperty.RATING },
+  { name: 'Цена по убыванию', sortProperty: ESortProperty.PRICE },
+  { name: 'Цена по возрастанию', sortProperty: ESortProperty.M_PRICE },
 ];
 
 const Sort = () => {
   // redux
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const sort = useSelector((state: any) => state.filter.sort);
 
   const sortRef = React.useRef<HTMLDivElement>(null);

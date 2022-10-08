@@ -5,8 +5,9 @@ import { ReactComponent as BirthdayIcon } from '../../assets/icon/birthday.svg';
 import { ReactComponent as GraduateIcon } from '../../assets/icon/graduate.svg';
 import { addItem } from '../../redux/slices/cartSlice';
 import style from './FullItem.module.css';
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
 import Loading from '../../components/Loading/Loading';
+import { useAppDispatch } from '../../redux/store';
 
 const FullItem: React.FC = () => {
   const [item, setItem] = React.useState<{
@@ -16,6 +17,10 @@ const FullItem: React.FC = () => {
     detail: string;
     price: number;
     imgUrl: string;
+    id: string;
+    category: string;
+    descr: string;
+    count: number;
   }>();
   const { id } = useParams(); // хук делает перерисовку, если адресная строка поменяется (как и useLocation)
   const navigate = useNavigate(); // хук вернет функцию, которая позволит нам делать переходы, типа dispatch для react-router
@@ -34,10 +39,12 @@ const FullItem: React.FC = () => {
     fetchItem();
   }, []);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const onClickAdd = () => {
-    dispatch(addItem(item));
+    if (item) {
+      dispatch(addItem(item));
+    }
   };
 
   if (!item) {

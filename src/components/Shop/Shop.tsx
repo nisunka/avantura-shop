@@ -1,7 +1,7 @@
 import React from 'react';
 import qs from 'qs';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { setCategoryId, setFilters } from '../../redux/slices/filterSlice';
 import Categories from '../Categories/Categories';
 import Search from '../Search/Search';
@@ -9,7 +9,8 @@ import Sort, { sortItem } from '../Sort/Sort';
 import StoreItem from '../StoreItem/StoreItem';
 import Skeleton from '../Skeleton/Skeleton';
 import style from './Shop.module.css';
-import { setItems, fetchGoods } from '../../redux/slices/goodsSlice';
+import { fetchGoods } from '../../redux/slices/goodsSlice';
+import { useAppDispatch } from '../../redux/store';
 
 const Shop: React.FC = () => {
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ const Shop: React.FC = () => {
   const isMounted = React.useRef(false); // первый рендер
 
   // redux
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { items, status } = useSelector((state: any) => state.goods);
   const { categoryId, sort, searchValue } = useSelector((state: any) => state.filter);
   const sortType = sort.sortProperty;
@@ -36,10 +37,7 @@ const Shop: React.FC = () => {
     // search
     const search = searchValue ? `&search=${searchValue}` : '';
 
-    dispatch(
-      // @ts-ignore
-      fetchGoods({ category, sortBy, order, search }),
-    );
+    dispatch(fetchGoods({ category, sortBy, order, search }));
   };
 
   // useEffect, который отвечает за парсинг параметров которые у нас есть, связанные с фильтрацией наших пицц и вшивание их в адресную строчку
@@ -65,8 +63,9 @@ const Shop: React.FC = () => {
       const sort = sortItem.find((obj) => obj.sortProperty === params.sortProperty);
       dispatch(
         setFilters({
-          ...params,
-          sort,
+          searchValue,
+          categoryId,
+          sort: sort || sortItem[0],
         }),
       );
       isSearch.current = true; // филтры изменились, значит нужно ререндить

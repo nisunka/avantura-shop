@@ -12,15 +12,36 @@ type TCartItem = {
   price: number;
   count: number;
   imgUrl: string;
-  descr: number;
+  descr: string;
+  category: string;
+  direction: string;
+  detail: string;
 };
 
-const CartItem: React.FC<TCartItem> = ({ id, name, price, count, imgUrl, descr }) => {
+const CartItem: React.FC<TCartItem> = ({
+  id,
+  name,
+  price,
+  count,
+  imgUrl,
+  descr,
+  category,
+  direction,
+  detail,
+}) => {
   const dispatch = useDispatch();
   const onClickPlus = () => {
     dispatch(
       addItem({
         id,
+        name,
+        price,
+        count,
+        imgUrl,
+        descr,
+        category,
+        direction,
+        detail,
       }),
     );
   };
